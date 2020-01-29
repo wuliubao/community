@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new LoginPage(),
+      home: new MainContentPage(),
       routes: <String, WidgetBuilder>{
         Constant.PAGE_LOGIN: (BuildContext context) => new LoginPage(),
         Constant.PAGE_MAIN_CONTENT: (BuildContext context) => new MainContentPage(),
