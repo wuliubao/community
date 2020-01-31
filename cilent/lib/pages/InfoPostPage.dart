@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PostPage extends StatefulWidget {
+class InfoPostPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => PostPageState();
+  State<StatefulWidget> createState() => InfoPostPageState();
 }
 
-class PostPageState extends State<PostPage> {
+class InfoPostPageState extends State<InfoPostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Post")),

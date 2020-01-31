@@ -1,3 +1,9 @@
+import 'package:cilent/pages/AllChannelPage.dart';
+import 'package:cilent/pages/ContentListPage.dart';
+import 'package:cilent/pages/PersonInfoPage.dart';
+import 'package:cilent/pages/SingleChannelPage.dart';
+import 'package:cilent/pages/maincontent/HeadlinePage.dart';
+import 'package:cilent/pages/DummyPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cilent/Model/NewsBean.dart';
@@ -7,8 +13,15 @@ class MainContentPage extends StatefulWidget {
   State<StatefulWidget> createState() => MainContentPageState();
 }
 
-class MainContentPageState extends State<MainContentPage>
-    with SingleTickerProviderStateMixin {
+class MainContentPageState extends State<MainContentPage> with SingleTickerProviderStateMixin {
+
+  TabController _tabController;
+  PageController _pageController;
+
+  List<Widget> MainBottomTabPages;
+  int MainBottomTabPagesIndex = 0;
+
+  //data list
   final List<Tab> myTabs = <Tab>[
     Tab(text: 'ONE'),
     Tab(text: 'TWO'),
@@ -24,6 +37,8 @@ class MainContentPageState extends State<MainContentPage>
     new NewsBean(text: "2", url: "2.jpg"),
   ];
 
+
+  //Widget
   Widget newsWidget(NewsBean newsBean) => Container(
         height: 100.0,
         color: Colors.redAccent,
@@ -37,18 +52,45 @@ class MainContentPageState extends State<MainContentPage>
         ),
       );
 
+  Widget tabIcon(IconData iconData, int index) =>  IconButton(
+    icon: Icon(iconData),
+    color: index == -1 ? Colors.transparent: Colors.black,
+    onPressed: () {
+      if (index >= 0) {
+        setState(() {
+          MainBottomTabPagesIndex = index;
+        });
+      }
+    },
+  );
+
+  //list Widget
   List<Widget> newsGen() => newsList.map((NewsBean newsBean) {
         return newsWidget(newsBean);
       }).toList();
 
-  TabController _tabController;
-  PageController _pageController;
+  List<Widget> tabPages = <Widget>[
+    HeadlinePage(),
+    SingleChannelPage(channelName: "美食"),
+    SingleChannelPage(channelName: "找工作"),
+    SingleChannelPage(channelName: "亲子"),
+    DummyPage(),
+    DummyPage(),
+    DummyPage(),
+  ];
+
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: myTabs.length);
 
+    MainBottomTabPages = <Widget>[
+      TabBarView(controller: _tabController, children: tabPages),
+      AllChannelPage(),
+      ContentListPage(),
+      PersonInfoPage(),
+    ];
   }
 
   @override
@@ -57,6 +99,7 @@ class MainContentPageState extends State<MainContentPage>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -66,79 +109,19 @@ class MainContentPageState extends State<MainContentPage>
           tabs: myTabs,
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: myTabs.map((Tab tab) {
-          final String label = tab.text.toLowerCase();
-//          return Center(
-//            child: Text(
-//              'This is the $label tab',
-//              style: const TextStyle(fontSize: 36),
-//            ),
-//          );
-          return CustomScrollView(
-            slivers: <Widget>[
-              SliverGrid(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200.0,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  childAspectRatio: 4.0,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.teal[100 * (index % 9)],
-                      child: Text('Grid Item $index'),
-                    );
-                  },
-                  childCount: 20,
-                ),
-              ),
-              SliverFixedExtentList(
-                itemExtent: 50.0,
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.lightBlue[100 * (index % 9)],
-                      child: Text('List Item $index'),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        }).toList(),
-      ),
+      body: MainBottomTabPages[MainBottomTabPagesIndex],
+      //使用BottomAppBar代替BottomNavigationBar来显示中间曲线效果
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.hotel),
-                onPressed: () {},
-              ),
-              IconButton(
-                color: Colors.transparent,
-                icon: Icon(Icons.hotel),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.hotel),
-                onPressed: () {},
-              ),
+              tabIcon(Icons.home, 0),
+              tabIcon(Icons.hotel, 1),
+              tabIcon(Icons.home, -1),
+              tabIcon(Icons.home, 2),
+              tabIcon(Icons.home, 3),
             ]),
       ),
       floatingActionButton: FloatingActionButton(
