@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HeadlinePage extends StatefulWidget {
@@ -6,9 +7,44 @@ class HeadlinePage extends StatefulWidget {
 }
 
 class HeadlinePageState extends State<HeadlinePage> {
+
+  PageController _pageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+//    _pageController = PageController();
+    super.initState();
+  }
+
+  void _onPageChange(int index) {
+    print("_onPageChange");
+    setState(() {
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
+
+        SliverToBoxAdapter(
+          child: Container(
+            height: 150.0,
+            color: Colors.red,
+            margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+            child: PageView.builder(
+              itemBuilder:  (context, index) {
+                return Center(
+                  child: Text("aaa"),  //每个页面展示的组件
+                );
+              },
+              scrollDirection: Axis.horizontal,
+              itemCount: 4,
+              controller: _pageController,
+              onPageChanged: _onPageChange,
+            ),  //每个页面展示的组件
+          ),
+        ),
         SliverGrid(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200.0,
@@ -43,4 +79,25 @@ class HeadlinePageState extends State<HeadlinePage> {
     );
   }
 
+  @override
+  Widget buildd(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Post"),
+
+      ),
+      body:  PageView.builder(
+        itemBuilder:  (context, index) {
+          return Center(
+            child: Text("aaa"),  //每个页面展示的组件
+          );
+        },
+        scrollDirection: Axis.horizontal,
+        itemCount: 4,
+        controller: _pageController,
+        onPageChanged: _onPageChange,
+      ),
+
+    );
+  }
 }
