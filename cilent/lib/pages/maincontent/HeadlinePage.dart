@@ -30,74 +30,58 @@ class HeadlinePageState extends State<HeadlinePage> {
         SliverToBoxAdapter(
           child: Container(
             height: 150.0,
-            color: Colors.red,
-            margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+//            color: Colors.red,
+//            margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
             child: PageView.builder(
               itemBuilder:  (context, index) {
-                return Center(
-                  child: Text("aaa"),  //每个页面展示的组件
+                return Container(
+                  margin: EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
+                  child: Image.asset("assets/images/news$index.jpg", fit:BoxFit.cover),
                 );
               },
               scrollDirection: Axis.horizontal,
               itemCount: 4,
               controller: _pageController,
               onPageChanged: _onPageChange,
-            ),  //每个页面展示的组件
+            ),
           ),
         ),
-        SliverGrid(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200.0,
-            mainAxisSpacing: 10.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 4.0,
-          ),
-          delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-              return Container(
-                alignment: Alignment.center,
-                color: Colors.teal[100 * (index % 9)],
-                child: Text('Grid Item $index'),
-              );
-            },
-            childCount: 20,
-          ),
-        ),
+//        SliverGrid(
+//          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+//            maxCrossAxisExtent: 200.0,
+//            mainAxisSpacing: 10.0,
+//            crossAxisSpacing: 10.0,
+//            childAspectRatio: 4.0,
+//          ),
+//          delegate: SliverChildBuilderDelegate(
+//                (BuildContext context, int index) {
+//              return Container(
+//                alignment: Alignment.center,
+//                color: Colors.teal[100 * (index % 9)],
+//                child: Text('Grid Item $index'),
+//              );
+//            },
+//            childCount: 20,
+//          ),
+//        ),
         SliverFixedExtentList(
-          itemExtent: 50.0,
+          itemExtent: 100.0,
           delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               return Container(
-                alignment: Alignment.center,
+                margin: EdgeInsets.all(10.0),
                 color: Colors.lightBlue[100 * (index % 9)],
-                child: Text('List Item $index'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                  Text('List Item $index'),
+                  Image.asset("assets/images/placeholder.png", width: 100,height: 100,),
+                ],),
               );
             },
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget buildd(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Post"),
-
-      ),
-      body:  PageView.builder(
-        itemBuilder:  (context, index) {
-          return Center(
-            child: Text("aaa"),  //每个页面展示的组件
-          );
-        },
-        scrollDirection: Axis.horizontal,
-        itemCount: 4,
-        controller: _pageController,
-        onPageChanged: _onPageChange,
-      ),
-
     );
   }
 }

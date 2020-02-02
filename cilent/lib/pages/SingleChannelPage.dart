@@ -1,3 +1,4 @@
+import 'package:cilent/components/InfoItem.dart';
 import 'package:flutter/material.dart';
 
 class SingleChannelPage extends StatefulWidget {
@@ -27,9 +28,10 @@ class SingleChannelPageState extends State<SingleChannelPage> {
         child: Column(
           children: <Widget>[
             Container(
+              height: 100.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/food.jpg"),
+                  image: AssetImage("assets/images/food.jpg",),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -37,9 +39,6 @@ class SingleChannelPageState extends State<SingleChannelPage> {
                 child: Text(channelName, style: TextStyle(fontSize: 16.0, color: Colors.white),),
               ),
             ),
-            Text("1"),
-            Text("2"),
-            Text("3"),
           ],
         )
     );
