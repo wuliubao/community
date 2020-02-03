@@ -1,4 +1,5 @@
 import 'package:cilent/components/InfoItem.dart';
+import 'package:cilent/components/InnerTabView.dart';
 import 'package:flutter/material.dart';
 
 class SingleChannelPage extends StatefulWidget {
@@ -39,6 +40,7 @@ class SingleChannelPageState extends State<SingleChannelPage> {
                 child: Text(channelName, style: TextStyle(fontSize: 16.0, color: Colors.white),),
               ),
             ),
+            InnerTabView(),
           ],
         )
     );

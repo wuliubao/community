@@ -17,6 +17,13 @@ class PersonInfoPageState extends State<PersonInfoPage> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
+
+        SliverToBoxAdapter(
+            child: Container(
+              color:Colors.blueAccent,
+              height: 150,
+            )
+        ),
         SliverGrid(
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200.0,
@@ -32,7 +39,7 @@ class PersonInfoPageState extends State<PersonInfoPage> {
                 child: Text('Grid Item $index'),
               );
             },
-            childCount: 2,
+            childCount: 4,
           ),
         ),
         SliverFixedExtentList(

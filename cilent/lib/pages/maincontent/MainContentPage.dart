@@ -31,6 +31,10 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
     Tab(text: '城外'),
     Tab(text: '视频'),
     Tab(text: '家装'),
+    Tab(text: '同城互助'),
+    Tab(text: '房产'),
+    Tab(text: '二手闲置'),
+    Tab(text: '同城活动'),
   ];
 
   final List<NewsBean> newsList = <NewsBean>[
@@ -53,22 +57,28 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
         ),
       );
 
-  Widget tabIcon(IconData iconData,String iconName, int index) =>  Column(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
-      IconButton(
-        icon: Icon(iconData),
-        color: index == -1 ? Colors.transparent: Colors.black,
-        onPressed: () {
-          if (index >= 0) {
-            setState(() {
-              MainBottomTabPagesIndex = index;
-            });
-          }
-        },
-      ),
-      Text(iconName,style: TextStyle(fontSize: 12.0),),
-    ],
+  Widget tabIcon(IconData iconData,String iconName, int index) => GestureDetector(
+      onTap:() {
+        if (index >= 0) {
+          setState(() {
+            MainBottomTabPagesIndex = index;
+          });
+        }
+      },
+      child:  Container(
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+//        color:Colors.red,
+        width: 60,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(iconData,color: MainBottomTabPagesIndex == index ? Colors.blue: Colors.grey),
+            Text(iconName,style:
+            MainBottomTabPagesIndex == index ?
+            TextStyle(fontSize: 12.0,color: Colors.blue):TextStyle(fontSize: 12.0,color: Colors.grey)),
+          ],
+        ),
+      )
   );
 
   //list Widget
@@ -97,14 +107,20 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
     }).toList();
 
     MainBottomTabPages = <Widget>[
-      Scaffold(
-        appBar: AppBar(
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: myTabs,
-        ),
-        ),
-        body: TabBarView(controller: _tabController, children: tabPages),
+      Column(
+        children: <Widget>[
+          TabBar(
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
+            isScrollable:true,
+            controller: _tabController,
+            tabs: myTabs,
+          ),
+          Expanded(
+//            height: 300,
+            child: TabBarView(controller: _tabController, children: tabPages),
+          )
+        ],
       ),
       AllChannelPage(),
       ContentListPage(),
@@ -122,11 +138,27 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("上虞"),
-//        bottom: TabBar(
-//          controller: _tabController,
-//          tabs: myTabs,
-//        ),
+//        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: Center(child: Text("上虞",style: TextStyle(fontSize: 16.0,color: Colors.black),),),
+        title: Container(
+          width: 220.0,
+          height: 30.0,
+          child: TextField(
+            decoration: InputDecoration(
+              border:InputBorder.none,
+              filled: true,
+              fillColor: Colors.black12,
+              hintText: "搜索内容或用户",
+              hintStyle: TextStyle(fontSize: 12),
+              prefixIcon: Icon(Icons.search,color: Colors.black12,),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.filter_center_focus),),
+          IconButton(icon: Icon(Icons.notifications_none),),
+        ],
       ),
       body: MainBottomTabPages[MainBottomTabPagesIndex],
       //使用BottomAppBar代替BottomNavigationBar来显示中间曲线效果
@@ -136,7 +168,7 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              tabIcon(Icons.home,"今日有料", 0),
+              tabIcon(Icons.whatshot,"今日有料", 0),
               tabIcon(Icons.message,"大家在聊", 1),
               tabIcon(Icons.home,"", -1),
               tabIcon(Icons.explore,"发现", 2),
