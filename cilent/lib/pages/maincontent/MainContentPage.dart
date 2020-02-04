@@ -66,6 +66,7 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
         }
       },
       child:  Container(
+
         margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
 //        color:Colors.red,
         width: 60,
