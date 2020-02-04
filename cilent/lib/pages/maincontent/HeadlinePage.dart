@@ -46,39 +46,35 @@ class HeadlinePageState extends State<HeadlinePage> {
             ),
           ),
         ),
-//        SliverGrid(
-//          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-//            maxCrossAxisExtent: 200.0,
-//            mainAxisSpacing: 10.0,
-//            crossAxisSpacing: 10.0,
-//            childAspectRatio: 4.0,
-//          ),
-//          delegate: SliverChildBuilderDelegate(
-//                (BuildContext context, int index) {
-//              return Container(
-//                alignment: Alignment.center,
-//                color: Colors.teal[100 * (index % 9)],
-//                child: Text('Grid Item $index'),
-//              );
-//            },
-//            childCount: 20,
-//          ),
-//        ),
         SliverFixedExtentList(
           itemExtent: 100.0,
           delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               return Container(
-                margin: EdgeInsets.all(10.0),
-                color: Colors.lightBlue[100 * (index % 9)],
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: EdgeInsets.all(10.0),
+//                color: Colors.red,
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(width: 1, color: Colors.black12))
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                  Text('List Item $index'),
-                  Image.asset("assets/images/placeholder.png", width: 100,height: 100,),
+                    Container(
+//                      color: Colors.blueAccent,
+                      width:200.0,
+                      child: Text('新闻发布第$index条，展示最新头条新闻消息', style: TextStyle(fontSize: 15.0),),),
+                  Container(
+                    color: Colors.indigo,
+                    width: 150.0,
+                    height: 100.0,
+                    child: Image.asset("assets/images/placeholder.png",fit:BoxFit.cover),
+                  )
+
                 ],),
               );
-            },
+            },childCount:50
           ),
         ),
       ],

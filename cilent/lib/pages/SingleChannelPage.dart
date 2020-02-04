@@ -12,7 +12,7 @@ class SingleChannelPage extends StatefulWidget {
   State<StatefulWidget> createState() => SingleChannelPageState();
 }
 
-class SingleChannelPageState extends State<SingleChannelPage> {
+class SingleChannelPageState extends State<SingleChannelPage> with SingleTickerProviderStateMixin{
 
   String channelName;
 
@@ -23,12 +23,13 @@ class SingleChannelPageState extends State<SingleChannelPage> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-          children: <Widget>[
-            Container(
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+            child: Container(
               height: 100.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -36,13 +37,28 @@ class SingleChannelPageState extends State<SingleChannelPage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Center(
-                child: Text(channelName, style: TextStyle(fontSize: 16.0, color: Colors.white),),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin:EdgeInsets.all(10),
+                    child: Text(channelName, style: TextStyle(fontSize: 16.0,fontWeight:FontWeight.bold, color: Colors.white),),),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text("讨论数：10000", style: TextStyle(fontSize: 12.0, color: Colors.white),),
+                      Text("今日：200", style: TextStyle(fontSize: 12.0, color: Colors.white),),
+                      Text("更多>", style: TextStyle(fontSize: 12.0, color: Colors.white),),
+                    ],
+                  )
+                ],
               ),
             ),
-            InnerTabView(),
-          ],
+        ),
+        SliverToBoxAdapter(
+          child: InnerTabView(),
         )
+      ],
     );
   }
 

@@ -7,40 +7,55 @@ class InnerTabView extends StatefulWidget {
   State<StatefulWidget> createState() => InnerTabViewState();
 }
 
-class InnerTabViewState extends State<InnerTabView> with SingleTickerProviderStateMixin{
+class InnerTabViewState extends State<InnerTabView>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-
   }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      TabBar(
-          controller: _tabController,
-          labelColor: Colors.black,
-        tabs: <Tab>[
-          Tab(text:"最新发布"),
-          Tab(text:"精华帖"),
-        ]
-      ),
-      Container(
-        height: 300.0,
-        child:TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            Center(child: Column(children: <Widget>[
-              InfoItem(),
-              CommentItem(),
-            ],),),
-            Center(child: Text("page of b"),),
-          ],
-        ),
-      )
-    ],);
+    return Column(
+      children: <Widget>[
+        TabBar(
+            controller: _tabController,
+            labelColor: Colors.black,
+            tabs: <Tab>[
+              Tab(text: "最新发布"),
+              Tab(text: "精华帖"),
+            ]),
+        Container(
+          height: 1400.0,
+          color: Colors.black12,
+          child: TabBarView(
+            controller: _tabController,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                  InfoItem(),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    );
   }
-
 }
