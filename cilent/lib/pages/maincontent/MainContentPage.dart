@@ -97,15 +97,23 @@ class MainContentPageState extends State<MainContentPage> with SingleTickerProvi
     super.initState();
     _tabController = TabController(vsync: this, length: myTabs.length);
 
-    tabPages = myTabs.map((Tab tab){
-      final String label = tab.text.toLowerCase();
+//    tabPages = myTabs.map((Tab tab){
+//      final String label = tab.text.toLowerCase();
+//
+//      if (label == "头条") {
+//        return HeadlinePage();
+//      } else {
+//        return SingleChannelPage(channelName: label);
+//      }
+//    }).toList();
 
-      if (label == "头条") {
+    tabPages = List.generate(myTabs.length, (index){
+      if (index == 0) {
         return HeadlinePage();
       } else {
-        return SingleChannelPage(channelName: label);
+        return SingleChannelPage(channelName: myTabs[index].text, tabIndex: index,);
       }
-    }).toList();
+    });
 
     MainBottomTabPages = <Widget>[
       Column(
