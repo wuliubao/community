@@ -18,6 +18,4 @@ public class CommunityApplication {
 		return "test ok";
 	}
 
-
-
 }
